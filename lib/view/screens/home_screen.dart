@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tailor_app/view/screens/family_record_screen.dart';
+import 'package:tailor_app/view/screens/individual_record_screen.dart';
+import 'package:tailor_app/view/widgets/add_record.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,16 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: TabBarView(
           children: [
-            Center(child: Text('Hello')),
-            Center(child: Text('Hello2')),
+            IndividualRecordScreen(),
+            FamilyRecordScreen()
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-                backgroundColor: Colors.blueGrey,
-          shape: CircleBorder(),
-          child: Icon(Icons.add,color: Colors.white,size: 40,),
-        ),
+
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/firebase_options.dart';
+import 'package:tailor_app/provider/individual_dialog_provider.dart';
 import 'package:tailor_app/provider/login_provider.dart';
 import 'package:tailor_app/provider/signin_provider.dart';
 import 'package:tailor_app/view/screens/home_screen.dart';
@@ -21,20 +22,18 @@ class MyApp extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return MultiProvider(
-        providers: [
-      ChangeNotifierProvider(create: (create)=>SignInProvider()),
-          ChangeNotifierProvider(create: (create)=> LoginProvider())
-    ],
+      providers: [
+        ChangeNotifierProvider(create: (create) => SignInProvider()),
+        ChangeNotifierProvider(create: (create) => LoginProvider()),
+        ChangeNotifierProvider(create: (create) => IndividualDialogProvider()),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: user != null ? HomeScreen() :
-        const SignupScreen(),
+        home: user != null ? HomeScreen() : const SignupScreen(),
       ),
     );
   }
 }
-
-
