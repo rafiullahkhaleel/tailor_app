@@ -4,11 +4,14 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final bool isLoading;
+  final double fontSize;
+  final FontWeight fontWeight;
   const CustomButton({
     super.key,
     required this.onTap,
     required this.title,
-    this.isLoading = false,
+    this.isLoading = false, this.fontSize = 22,
+    this.fontWeight = FontWeight.w500,
   });
 
   @override
@@ -28,8 +31,8 @@ class CustomButton extends StatelessWidget {
             title,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 22,
-              fontWeight: FontWeight.w500,
+              fontSize: fontSize,
+              fontWeight: fontWeight,
             ),
           ),
         ),

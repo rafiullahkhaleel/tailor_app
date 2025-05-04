@@ -16,23 +16,26 @@ class CustomField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
-        hintText: hint,
-        hintStyle: TextStyle(color: Colors.black26),
+    return SizedBox(
+      height: 55,
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
+          hintText: hint,
+          hintStyle: TextStyle(color: Colors.black26),
+        ),
+        onChanged: onChanged,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return emptyFieldError;
+          } else if (value.length < 6) {
+            return lengthError;
+          } else {
+            return null;
+          }
+        },
       ),
-      onChanged: onChanged,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return emptyFieldError;
-        } else if (value.length < 6) {
-          return lengthError;
-        } else {
-          return null;
-        }
-      },
     );
   }
 }
