@@ -147,8 +147,13 @@ class _IndividualRecordDialogState extends State<IndividualRecordDialog> {
                       child: CustomButton(
                         fontSize: 19,
                         fontWeight: FontWeight.w400,
-                        onTap: () {},
+                        onTap: () {
+                          if(provider.formKey.currentState!.validate()){
+                            provider.individualData(context);
+                          }
+                        },
                         title: 'Save',
+                        isLoading: provider.isLoading,
                       ),
                     ),
                   ],

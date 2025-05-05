@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class IndividualDialogProvider extends ChangeNotifier {
@@ -10,6 +12,7 @@ class IndividualDialogProvider extends ChangeNotifier {
   TextEditingController backYokeController = TextEditingController();
   TextEditingController pantsHeightController = TextEditingController();
   TextEditingController painaController = TextEditingController();
+  bool isLoading = false;
 
   clear() {
     heightController.clear();
@@ -23,5 +26,48 @@ class IndividualDialogProvider extends ChangeNotifier {
 
   notify() {
     notifyListeners();
+  }
+
+  Future<void> individualData(BuildContext context) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+      await FirebaseFirestore.instance
+          .collection('individual')
+          .doc(DateTime.now().microsecondsSinceEpoch.toString())
+          .set({
+            'name': nameController.text,
+            'height': heightController.text,
+            'width': widthController.text,
+            'sleeve': sleeveController.text,
+            'neckband': neckbandController.text,
+            'backYoke': backYokeController.text,
+            'pantsHeight': pantsHeightController.text,
+            'paina': painaController.text,
+            'uid': FirebaseAuth.instance.currentUser!.uid,
+          })
+          .then((val) {
+            isLoading = false;
+            notifyListeners();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.blueGrey,
+                content: Text('SUCCESSFULLY SAVED'),
+              ),
+            );
+            // clear();
+            Navigator.of(context).pop();
+          });
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.blueGrey,
+          content: Text('ERROR OCCURRED $e'),
+        ),
+      );
+      Navigator.of(context).pop();
+    }
   }
 }

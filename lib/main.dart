@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/firebase_options.dart';
 import 'package:tailor_app/provider/individual_dialog_provider.dart';
+import 'package:tailor_app/provider/individual_screen_provider.dart';
 import 'package:tailor_app/provider/login_provider.dart';
 import 'package:tailor_app/provider/signin_provider.dart';
 import 'package:tailor_app/view/screens/home_screen.dart';
@@ -26,12 +27,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (create) => SignInProvider()),
         ChangeNotifierProvider(create: (create) => LoginProvider()),
         ChangeNotifierProvider(create: (create) => IndividualDialogProvider()),
+        ChangeNotifierProvider(create: (create)=>IndividualScreenProvider())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
+        debugShowCheckedModeBanner: false,
         home: user != null ? HomeScreen() : const SignupScreen(),
       ),
     );
