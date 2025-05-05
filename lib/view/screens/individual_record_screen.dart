@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/provider/individual_screen_provider.dart';
+import 'package:tailor_app/view/screens/individual_detail_screen.dart';
 import 'package:tailor_app/view/widgets/individual_record_dialog.dart';
 
 class IndividualRecordScreen extends StatefulWidget {
@@ -38,18 +39,42 @@ class _IndividualRecordScreenState extends State<IndividualRecordScreen> {
                     children: [
                       SizedBox(height: 10),
                       ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => IndividualDetailScreen(
+                                    name: data['name'],
+                                    length: data['height'],
+                                    width: data['width'],
+                                    sleeve: data['sleeve'],
+                                    neckBand: data['neckband'],
+                                    backYoke: data['backYoke'],
+                                    pantLength: data['pantsHeight'],
+                                    paina: data['paina'],
+                                  ),
+                            ),
+                          );
+                        },
                         leading: CircleAvatar(
                           radius: 30,
                           backgroundColor: Colors.blueGrey,
                           child: Text(
-                            data['name'].isNotEmpty
-                                ? provider.snapshot[index]['name'][0]
-                                : '',
+                            data['name'].isNotEmpty ? data['name'][0] : '',
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 25,
                               color: Colors.white,
                             ),
+                          ),
+                        ),
+                        title: Text(
+                          data['name'],
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
