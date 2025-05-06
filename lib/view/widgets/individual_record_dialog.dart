@@ -15,13 +15,14 @@ class _IndividualRecordDialogState extends State<IndividualRecordDialog> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20, right: 15, left: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 15),
       child: Consumer<IndividualDialogProvider>(
         builder: (context, provider, child) {
           return Form(
             key: provider.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               spacing: 20,
               children: [
                 Center(

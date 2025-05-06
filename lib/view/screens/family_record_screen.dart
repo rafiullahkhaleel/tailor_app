@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tailor_app/view/widgets/family_create_dialog.dart';
 
 class FamilyRecordScreen extends StatefulWidget {
   const FamilyRecordScreen({super.key});
@@ -13,7 +14,13 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          showDialog(
+              context: context,
+              builder: (context){
+                return Dialog(
+                  child: FamilyCreateDialog(),
+                );
+              });
         },
         backgroundColor: Colors.blueGrey,
         shape: CircleBorder(),
