@@ -3,7 +3,8 @@ import 'package:tailor_app/view/screens/family_record_screen.dart';
 import 'package:tailor_app/view/screens/individual_record_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int tabIndex;
+  const HomeScreen({super.key, this.tabIndex = 0});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
+      initialIndex: widget.tabIndex,
       child: Scaffold(
         appBar: AppBar(
           title: Text(

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tailor_app/view/screens/family_record_screen.dart';
+import 'package:tailor_app/view/screens/home_screen.dart';
 
 class FamilyCreateProvider extends ChangeNotifier {
   final TextEditingController _controller = TextEditingController();
@@ -22,7 +24,8 @@ class FamilyCreateProvider extends ChangeNotifier {
           }).then((value){
             _isLoading = false;
             notifyListeners();
-            Navigator.of(context).pop();
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context)=>HomeScreen(tabIndex: 1,)));
             _controller.clear();
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
