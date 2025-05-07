@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tailor_app/view/screens/family_members_screen.dart';
 
-class FamilyMemberDialogProvider extends ChangeNotifier{
+class FamilyMemberDialogProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController relationController = TextEditingController();
@@ -31,7 +32,11 @@ class FamilyMemberDialogProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> familyMemberData(BuildContext context,String id) async {
+  Future<void> familyMemberData(
+    BuildContext context,
+    String id,
+    String title,
+  ) async {
     try {
       isLoading = true;
       notifyListeners();
@@ -39,28 +44,35 @@ class FamilyMemberDialogProvider extends ChangeNotifier{
           .collection('familyMembers')
           .doc(DateTime.now().microsecondsSinceEpoch.toString())
           .set({
-        'name': nameController.text,
-        'relation' : relationController.text,
-        'height': heightController.text,
-        'width': widthController.text,
-        'sleeve': sleeveController.text,
-        'neckband': neckbandController.text,
-        'backYoke': backYokeController.text,
-        'pantsHeight': pantsHeightController.text,
-        'paina': painaController.text,
-        'uid': FirebaseAuth.instance.currentUser!.uid,
-        'id' : id
-      })
+            'name': nameController.text,
+            'relation': relationController.text,
+            'height': heightController.text,
+            'width': widthController.text,
+            'sleeve': sleeveController.text,
+            'neckband': neckbandController.text,
+            'backYoke': backYokeController.text,
+            'pantsHeight': pantsHeightController.text,
+            'paina': painaController.text,
+            'uid': FirebaseAuth.instance.currentUser!.uid,
+            'id': id,
+          })
           .then((val) {
-        isLoading = false;
-        notifyListeners();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.blueGrey,
-            content: Text('SUCCESSFULLY SAVED'),
-          ),
-        );
-        });
+            isLoading = false;
+            clear();
+            notifyListeners();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.blueGrey,
+                content: Text('SUCCESSFULLY SAVED'),
+              ),
+            );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FamilyMembersScreen(title: title, id: id),
+              ),
+            );
+          });
     } catch (e) {
       isLoading = false;
       notifyListeners();
@@ -70,7 +82,6 @@ class FamilyMemberDialogProvider extends ChangeNotifier{
           content: Text('ERROR OCCURRED $e'),
         ),
       );
-      Navigator.of(context).pop();
     }
   }
 }

@@ -7,7 +7,8 @@ import 'custom_field.dart';
 
 class FamilyMemberDialog extends StatefulWidget {
   final String id;
-  const FamilyMemberDialog({super.key, required this.id});
+  final String title;
+  const FamilyMemberDialog({super.key, required this.id, required this.title});
 
   @override
   State<FamilyMemberDialog> createState() => _FamilyMemberDialogState();
@@ -155,7 +156,7 @@ class _FamilyMemberDialogState extends State<FamilyMemberDialog> {
                         fontSize: 19,
                         fontWeight: FontWeight.w400,
                         onTap: () {
-                          provider.familyMemberData(context, widget.id);
+                          provider.familyMemberData(context, widget.id,widget.title);
                         },
                         title: 'Save',
                       ),
