@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tailor_app/view/screens/family_record_screen.dart';
 import 'package:tailor_app/view/screens/home_screen.dart';
@@ -20,18 +21,14 @@ class FamilyCreateProvider extends ChangeNotifier {
       await FirebaseFirestore.instance.collection('families').doc(docsName).set(
           {
             'headName' : controller.text,
-            'id' : docsName
+            'id' : docsName,
+            'uid' : FirebaseAuth.instance.currentUser!.uid
           }).then((value){
             _isLoading = false;
             notifyListeners();
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context)=>HomeScreen(tabIndex: 1,)));
             _controller.clear();
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  backgroundColor: Colors.blueGrey,
-                  content: Text('SUCCESSFULLY SAVED'),
-                ));
       });
     }catch(e){
       _isLoading = false;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/provider/family_record_provider.dart';
+import 'package:tailor_app/view/screens/family_members_screen.dart';
 import 'package:tailor_app/view/widgets/family_create_dialog.dart';
 
 class FamilyRecordScreen extends StatefulWidget {
@@ -37,6 +38,13 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                       children: [
                         SizedBox(height: 10),
                         ListTile(
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context)=>FamilyMembersScreen(
+                                  title: data['headName'],
+                                  id: data['id'],
+                                )));
+                          },
                           leading: CircleAvatar(
                             radius: 30,
                             backgroundColor: Colors.blueGrey,
