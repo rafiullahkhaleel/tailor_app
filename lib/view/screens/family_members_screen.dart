@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/view/screens/family_members_detail_screen.dart';
+import 'package:tailor_app/view/widgets/custom_field.dart';
 import 'package:tailor_app/view/widgets/family_member_dialog.dart';
 
 import '../../provider/family_member_provider.dart';
@@ -44,67 +45,84 @@ class _FamilyMembersScreenState extends State<FamilyMembersScreen> {
             backgroundColor: Colors.blueGrey,
             centerTitle: true,
           ),
-          body: () {
-            if (provider.isLoading) {
-              return Center(child: CircularProgressIndicator());
-            } else if (provider.error != null) {
-              return Center(child: Text('ERROR OCCURRED ${provider.error}'));
-            } else {
-              return ListView.builder(
-                itemCount: provider.snapshot.length,
-                itemBuilder: (context, index) {
-                  final data = provider.snapshot[index];
-                  return Column(
-                    children: [
-                      SizedBox(height: 10),
-                      ListTile(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => FamilyMembersDetailScreen(
-                                    title: data['name'],
-                                    relation: data['relation'],
-                                    length: data['height'],
-                                    width: data['width'],
-                                    sleeve: data['sleeve'],
-                                    neckBand: data['neckband'],
-                                    backYoke: data['backYoke'],
-                                    pantLength: data['pantsHeight'],
-                                    paina: data['paina'],
-                                    familyHead: widget.title,
+          body: Padding(
+            padding: const EdgeInsets.only(right: 20,left: 20,top: 10),
+            child: () {
+              final listToShow = provider.filteredController.text.isEmpty ? provider.snapshot : provider.filteredSnapshot;
+              if (provider.isLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else if (provider.error != null) {
+                return Center(child: Text('ERROR OCCURRED ${provider.error}'));
+              } else {
+                return Column(
+                  children: [
+                    CustomField(
+                        hint: 'Search',
+                      controller: provider.filteredController,
+                      onChanged: (search){
+                          provider.filter(search);
+                      },
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: listToShow.length,
+                        itemBuilder: (context, index) {
+                          final data = listToShow[index];
+                          return Column(
+                            children: [
+                              SizedBox(height: 10),
+                              ListTile(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder:
+                                          (context) => FamilyMembersDetailScreen(
+                                        title: data['name'],
+                                        relation: data['relation'],
+                                        length: data['height'],
+                                        width: data['width'],
+                                        sleeve: data['sleeve'],
+                                        neckBand: data['neckband'],
+                                        backYoke: data['backYoke'],
+                                        pantLength: data['pantsHeight'],
+                                        paina: data['paina'],
+                                        familyHead: widget.title,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.blueGrey,
+                                  child: Text(
+                                    data['name'].isNotEmpty ? data['name'][0] : '',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 25,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                            ),
+                                ),
+                                title: Text(
+                                  data['name'],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           );
                         },
-                        leading: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.blueGrey,
-                          child: Text(
-                            data['name'].isNotEmpty ? data['name'][0] : '',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 25,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                        title: Text(
-                          data['name'],
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
                       ),
-                    ],
-                  );
-                },
-              );
-            }
-          }(),
+                    ),
+                  ],
+                );
+              }
+            }(),
+          ),
 
           floatingActionButton: FloatingActionButton(
             onPressed: () {

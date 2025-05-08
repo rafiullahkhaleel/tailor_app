@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FamilyMemberProvider extends ChangeNotifier{
+  TextEditingController filteredController = TextEditingController();
   List<DocumentSnapshot> _snapshot = [];
+  List<DocumentSnapshot> _filteredSnapshot = [];
   String? _error;
   bool _isLoading = false;
 
   List<DocumentSnapshot> get snapshot => _snapshot;
+  List<DocumentSnapshot> get filteredSnapshot => _filteredSnapshot;
   String? get error=> _error;
   bool get isLoading => _isLoading;
 
@@ -32,6 +35,12 @@ class FamilyMemberProvider extends ChangeNotifier{
       print(e.toString());
       _isLoading = false;
     }
+    notifyListeners();
+  }
+  void filter(String search){
+    _filteredSnapshot = snapshot.where((docs){
+      return docs['name'].toString().toLowerCase().contains(search.toLowerCase());
+    }).toList();
     notifyListeners();
   }
 }

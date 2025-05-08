@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FamilyRecordProvider extends ChangeNotifier{
+  TextEditingController filterController = TextEditingController();
   List<DocumentSnapshot> _snapshot = [];
+  List<DocumentSnapshot> _filteredSnapshot = [];
   bool _isLoading = false;
   String? _error ;
   
   List<DocumentSnapshot> get snapshot => _snapshot;
+  List<DocumentSnapshot> get filteredSnapshot => _filteredSnapshot;
   bool get isLoading => _isLoading;
   String? get error => _error;
   
@@ -26,5 +29,12 @@ class FamilyRecordProvider extends ChangeNotifier{
       _error = e.toString();
       notifyListeners();
     }
+  }
+
+  void filter(String search){
+    _filteredSnapshot = snapshot.where((docs){
+      return docs['headName'].toString().toLowerCase().contains(search.toLowerCase());
+    }).toList();
+    notifyListeners();
   }
 }
