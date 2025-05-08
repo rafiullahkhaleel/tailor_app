@@ -27,83 +27,101 @@ class _IndividualRecordScreenState extends State<IndividualRecordScreen> {
       builder: (context, provider, child) {
         return Scaffold(
           body: Padding(
-            padding: const EdgeInsets.only(right: 20,left: 20,top: 10),
+            padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
             child: () {
-              final listToShow = provider.filterController.text.isEmpty
-                  ? provider.snapshot
-                  : provider.filteredSnapshot;
+              final listToShow =
+                  provider.filterController.text.isEmpty
+                      ? provider.snapshot
+                      : provider.filteredSnapshot;
 
               if (provider.isLoading) {
-            return Center(child: CircularProgressIndicator());
-                              } else if (provider.error != null) {
-            return Center(child: Text('ERROR OCCURRED ${provider.error}'));
-                              } else {
-            return Column(
-              children: [
-                CustomField(
-                    hint: 'Search',
-                  controller: provider.filterController,
-                  onChanged: (value){
-                      provider.filter(value);
-                  },
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: listToShow.length,
-                    itemBuilder: (context, index) {
-                      final data = listToShow[index];
-                      return Column(
-                        children: [
-                          SizedBox(height: 10),
-                          ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder:
-                                      (context) => IndividualDetailScreen(
-                                    name: data['name'],
-                                    length: data['height'],
-                                    width: data['width'],
-                                    sleeve: data['sleeve'],
-                                    neckBand: data['neckband'],
-                                    backYoke: data['backYoke'],
-                                    pantLength: data['pantsHeight'],
-                                    paina: data['paina'],
+                return Center(child: CircularProgressIndicator());
+              } else if (provider.error != null) {
+                return Center(child: Text('ERROR OCCURRED ${provider.error}'));
+              } else if(listToShow.isEmpty){
+                return Center(child: Text('No data Available',style: TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),),);
+              }else{
+                return Column(
+                  children: [
+                    CustomField(
+                      hint: 'Search',
+                      controller: provider.filterController,
+                      onChanged: (value) {
+                        provider.filter(value);
+                      },
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: listToShow.length,
+                        itemBuilder: (context, index) {
+                          final data = listToShow[index];
+                          String id = listToShow[index].id;
+                          return Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Dismissible(
+                                key: Key(id),
+                                direction: DismissDirection.horizontal,
+                                background: MyContainer(),
+                                onDismissed: (direction) {
+                                  provider.delete(id);
+                                },
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => IndividualDetailScreen(
+                                              name: data['name'],
+                                              length: data['height'],
+                                              width: data['width'],
+                                              sleeve: data['sleeve'],
+                                              neckBand: data['neckband'],
+                                              backYoke: data['backYoke'],
+                                              pantLength: data['pantsHeight'],
+                                              paina: data['paina'],
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  leading: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.blueGrey,
+                                    child: Text(
+                                      data['name'].isNotEmpty
+                                          ? data['name'][0]
+                                          : '',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    data['name'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
-                              );
-                            },
-                            leading: CircleAvatar(
-                              radius: 30,
-                              backgroundColor: Colors.blueGrey,
-                              child: Text(
-                                data['name'].isNotEmpty ? data['name'][0] : '',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 25,
-                                  color: Colors.white,
-                                ),
                               ),
-                            ),
-                            title: Text(
-                              data['name'],
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-                              }
-                            }(),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
+            }(),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -120,6 +138,27 @@ class _IndividualRecordScreenState extends State<IndividualRecordScreen> {
           ),
         );
       },
+    );
+  }
+}
+
+class MyContainer extends StatelessWidget {
+  const MyContainer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.red,
+      alignment: Alignment.centerRight,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+        Icon(Icons.delete, color: Colors.white),
+        Icon(Icons.delete, color: Colors.white)
+      ],),
     );
   }
 }

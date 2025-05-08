@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/view/screens/family_members_detail_screen.dart';
+import 'package:tailor_app/view/screens/individual_record_screen.dart';
 import 'package:tailor_app/view/widgets/custom_field.dart';
 import 'package:tailor_app/view/widgets/family_member_dialog.dart';
 
@@ -46,21 +47,35 @@ class _FamilyMembersScreenState extends State<FamilyMembersScreen> {
             centerTitle: true,
           ),
           body: Padding(
-            padding: const EdgeInsets.only(right: 20,left: 20,top: 10),
+            padding: const EdgeInsets.only(right: 20, left: 20, top: 10),
             child: () {
-              final listToShow = provider.filteredController.text.isEmpty ? provider.snapshot : provider.filteredSnapshot;
+              final listToShow =
+                  provider.filteredController.text.isEmpty
+                      ? provider.snapshot
+                      : provider.filteredSnapshot;
               if (provider.isLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (provider.error != null) {
                 return Center(child: Text('ERROR OCCURRED ${provider.error}'));
+              } else if (listToShow.isEmpty) {
+                return Center(
+                  child: Text(
+                    'No data Available',
+                    style: TextStyle(
+                      color: Colors.blueGrey,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                );
               } else {
                 return Column(
                   children: [
                     CustomField(
-                        hint: 'Search',
+                      hint: 'Search',
                       controller: provider.filteredController,
-                      onChanged: (search){
-                          provider.filter(search);
+                      onChanged: (search) {
+                        provider.filter(search);
                       },
                     ),
                     Expanded(
@@ -68,48 +83,61 @@ class _FamilyMembersScreenState extends State<FamilyMembersScreen> {
                         itemCount: listToShow.length,
                         itemBuilder: (context, index) {
                           final data = listToShow[index];
+                          String id = listToShow[index].id;
                           return Column(
                             children: [
                               SizedBox(height: 10),
-                              ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => FamilyMembersDetailScreen(
-                                        title: data['name'],
-                                        relation: data['relation'],
-                                        length: data['height'],
-                                        width: data['width'],
-                                        sleeve: data['sleeve'],
-                                        neckBand: data['neckband'],
-                                        backYoke: data['backYoke'],
-                                        pantLength: data['pantsHeight'],
-                                        paina: data['paina'],
-                                        familyHead: widget.title,
+                              Dismissible(
+                                key: Key(id),
+                                direction: DismissDirection.horizontal,
+                                background: MyContainer(),
+                                onDismissed: (value) {
+                                  provider.delete(id);
+                                },
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) =>
+                                                FamilyMembersDetailScreen(
+                                                  title: data['name'],
+                                                  relation: data['relation'],
+                                                  length: data['height'],
+                                                  width: data['width'],
+                                                  sleeve: data['sleeve'],
+                                                  neckBand: data['neckband'],
+                                                  backYoke: data['backYoke'],
+                                                  pantLength:
+                                                      data['pantsHeight'],
+                                                  paina: data['paina'],
+                                                  familyHead: widget.title,
+                                                ),
+                                      ),
+                                    );
+                                  },
+                                  leading: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.blueGrey,
+                                    child: Text(
+                                      data['name'].isNotEmpty
+                                          ? data['name'][0]
+                                          : '',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 25,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                  );
-                                },
-                                leading: CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.blueGrey,
-                                  child: Text(
-                                    data['name'].isNotEmpty ? data['name'][0] : '',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 25,
-                                      color: Colors.white,
-                                    ),
                                   ),
-                                ),
-                                title: Text(
-                                  data['name'],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                  title: Text(
+                                    data['name'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),

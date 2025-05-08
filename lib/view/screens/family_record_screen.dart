@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/provider/family_record_provider.dart';
 import 'package:tailor_app/view/screens/family_members_screen.dart';
+import 'package:tailor_app/view/screens/individual_record_screen.dart';
 import 'package:tailor_app/view/widgets/custom_field.dart';
 import 'package:tailor_app/view/widgets/family_create_dialog.dart';
 
@@ -37,7 +38,13 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                 return Center(child: CircularProgressIndicator());
               } else if (provider.error != null) {
                 return Center(child: Text('ERROR OCCURRED ${provider.error}'));
-              } else {
+              } else if(listToShow.isEmpty){
+                return Center(child: Text('No data Available',style: TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),),);
+              }else{
                 return Column(
                   children: [
                     CustomField(
@@ -52,42 +59,51 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                         itemCount: listToShow.length,
                         itemBuilder: (context, index) {
                           final data = listToShow[index];
+                          String id = listToShow[index].id;
                           return Column(
                             children: [
                               SizedBox(height: 10),
-                              ListTile(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (context) => FamilyMembersScreen(
-                                        title: data['headName'],
-                                        id: data['id'],
+                              Dismissible(
+                                key: Key(id),
+                                direction: DismissDirection.horizontal,
+                                background: MyContainer(),
+                                onDismissed: (value){
+                                  provider.delete(id);
+                                },
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => FamilyMembersScreen(
+                                          title: data['headName'],
+                                          id: data['id'],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  leading: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.blueGrey,
+                                    child: Text(
+                                      data['headName'].isNotEmpty
+                                          ? data['headName'][0]
+                                          : '',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 25,
+                                        color: Colors.white,
                                       ),
                                     ),
-                                  );
-                                },
-                                leading: CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.blueGrey,
-                                  child: Text(
-                                    data['headName'].isNotEmpty
-                                        ? data['headName'][0]
-                                        : '',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 25,
-                                      color: Colors.white,
-                                    ),
                                   ),
-                                ),
-                                title: Text(
-                                  data['headName'],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                  title: Text(
+                                    data['headName'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
                               ),

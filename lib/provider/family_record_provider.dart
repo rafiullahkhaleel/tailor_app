@@ -31,6 +31,17 @@ class FamilyRecordProvider extends ChangeNotifier{
     }
   }
 
+  Future<void> delete(String id)async{
+
+    await FirebaseFirestore.instance
+        .collection('families')
+        .doc(id)
+        .delete();
+    _snapshot.removeWhere((doc) => doc.id == id);
+    _filteredSnapshot.removeWhere((doc) => doc.id == id);
+    notifyListeners();
+  }
+
   void filter(String search){
     _filteredSnapshot = snapshot.where((docs){
       return docs['headName'].toString().toLowerCase().contains(search.toLowerCase());
