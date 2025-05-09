@@ -85,6 +85,7 @@ class _IndividualRecordScreenState extends State<IndividualRecordScreen> {
                                               backYoke: data['backYoke'],
                                               pantLength: data['pantsHeight'],
                                               paina: data['paina'],
+                                              id: id,
                                             ),
                                       ),
                                     );

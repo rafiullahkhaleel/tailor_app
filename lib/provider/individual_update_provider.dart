@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../view/screens/home_screen.dart';
-
-class IndividualDialogProvider extends ChangeNotifier {
+class IndividualUpdateProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController heightController = TextEditingController();
@@ -31,14 +29,14 @@ class IndividualDialogProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> individualData(BuildContext context) async {
+  Future<void> updateIndividualData(BuildContext context, String id) async {
     try {
       isLoading = true;
       notifyListeners();
       await FirebaseFirestore.instance
           .collection('individual')
-          .doc(DateTime.now().microsecondsSinceEpoch.toString())
-          .set({
+          .doc(id)
+          .update({
             'name': nameController.text,
             'height': heightController.text,
             'width': widthController.text,
@@ -57,11 +55,6 @@ class IndividualDialogProvider extends ChangeNotifier {
                 backgroundColor: Colors.blueGrey,
                 content: Text('SUCCESSFULLY SAVED'),
               ),
-            );
-            clear();
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen(tabIndex: 0)),
             );
           });
     } catch (e) {

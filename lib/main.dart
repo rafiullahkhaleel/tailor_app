@@ -9,6 +9,7 @@ import 'package:tailor_app/provider/family_member_provider.dart';
 import 'package:tailor_app/provider/family_record_provider.dart';
 import 'package:tailor_app/provider/individual_dialog_provider.dart';
 import 'package:tailor_app/provider/individual_screen_provider.dart';
+import 'package:tailor_app/provider/individual_update_provider.dart';
 import 'package:tailor_app/provider/login_provider.dart';
 import 'package:tailor_app/provider/signin_provider.dart';
 import 'package:tailor_app/view/screens/home_screen.dart';
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (create)=>FamilyCreateProvider()),
         ChangeNotifierProvider(create: (create)=> FamilyRecordProvider()),
         ChangeNotifierProvider(create: (create)=>FamilyMemberDialogProvider()),
-        ChangeNotifierProvider(create: (create)=> FamilyMemberProvider())
+        ChangeNotifierProvider(create: (create)=> FamilyMemberProvider()),
+        ChangeNotifierProvider(create: (create)=>IndividualUpdateProvider())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

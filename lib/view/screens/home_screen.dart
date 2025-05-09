@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tailor_app/view/screens/family_record_screen.dart';
 import 'package:tailor_app/view/screens/individual_record_screen.dart';
+import 'package:tailor_app/view/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int tabIndex;
@@ -17,7 +19,22 @@ class _HomeScreenState extends State<HomeScreen> {
       length: 2,
       initialIndex: widget.tabIndex,
       child: Scaffold(
+        drawer: Drawer(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ListTile(
+                onTap: ()async{
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                },
+                leading: Icon(Icons.logout,color: Colors.blueGrey,),
+                title: Text('Sign out',style: TextStyle(color: Colors.blueGrey),),)
+            ],
+          ),
+        ),
         appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.white),
           title: Text(
             'Tailor App',
             style: TextStyle(
