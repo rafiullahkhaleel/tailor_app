@@ -40,10 +40,13 @@ class FamilyMemberDialogProvider extends ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
-      await FirebaseFirestore.instance
-          .collection('familyMembers')
-          .doc(DateTime.now().microsecondsSinceEpoch.toString())
-          .set({
+      DocumentReference reference =
+          FirebaseFirestore.instance
+              .collection('families')
+              .doc(id)
+              .collection('familyMembers')
+              .doc();
+      await reference.set({
             'name': nameController.text,
             'relation': relationController.text,
             'height': heightController.text,
@@ -54,7 +57,7 @@ class FamilyMemberDialogProvider extends ChangeNotifier {
             'pantsHeight': pantsHeightController.text,
             'paina': painaController.text,
             'uid': FirebaseAuth.instance.currentUser!.uid,
-            'id': id,
+            'id': reference.id,
           })
           .then((val) {
             isLoading = false;
