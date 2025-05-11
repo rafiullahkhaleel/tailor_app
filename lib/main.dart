@@ -3,17 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailor_app/firebase_options.dart';
-import 'package:tailor_app/provider/family_create_provide.dart';
-import 'package:tailor_app/provider/family_member_dialog_provider.dart';
-import 'package:tailor_app/provider/family_member_provider.dart';
-import 'package:tailor_app/provider/family_record_provider.dart';
-import 'package:tailor_app/provider/individual_dialog_provider.dart';
-import 'package:tailor_app/provider/individual_screen_provider.dart';
-import 'package:tailor_app/provider/individual_update_provider.dart';
-import 'package:tailor_app/provider/login_provider.dart';
-import 'package:tailor_app/provider/signin_provider.dart';
+import 'package:tailor_app/provider/family/family_create_provide.dart';
+import 'package:tailor_app/provider/family/family_member_dialog_provider.dart';
+import 'package:tailor_app/provider/family/family_member_provider.dart';
+import 'package:tailor_app/provider/family/family_record_provider.dart';
+import 'package:tailor_app/provider/individual/individual_dialog_provider.dart';
+import 'package:tailor_app/provider/individual/individual_screen_provider.dart';
+import 'package:tailor_app/provider/individual/individual_update_provider.dart';
+import 'package:tailor_app/provider/auth/login_provider.dart';
+import 'package:tailor_app/provider/auth/signin_provider.dart';
 import 'package:tailor_app/view/screens/home_screen.dart';
-import 'package:tailor_app/view/screens/signup_screen.dart';
+import 'package:tailor_app/view/screens/auth/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

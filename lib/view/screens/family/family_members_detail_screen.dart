@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'individual_detail_screen.dart';
+import '../individual/individual_detail_screen.dart';
 
 class FamilyMembersDetailScreen extends StatefulWidget {
   final String title;

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tailor_app/view/screens/family_record_screen.dart';
+import 'package:tailor_app/view/screens/family/family_record_screen.dart';
 import 'package:tailor_app/view/screens/home_screen.dart';
 
 class FamilyCreateProvider extends ChangeNotifier {

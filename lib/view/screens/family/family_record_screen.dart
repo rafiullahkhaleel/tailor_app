@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailor_app/provider/family_record_provider.dart';
-import 'package:tailor_app/view/screens/family_members_screen.dart';
-import 'package:tailor_app/view/screens/individual_record_screen.dart';
+import 'package:tailor_app/provider/family/family_record_provider.dart';
+import 'package:tailor_app/view/screens/family/family_members_screen.dart';
+import 'package:tailor_app/view/screens/individual/individual_record_screen.dart';
 import 'package:tailor_app/view/widgets/custom_field.dart';
 import 'package:tailor_app/view/widgets/family_create_dialog.dart';
 

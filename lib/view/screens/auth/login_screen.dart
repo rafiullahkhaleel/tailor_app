@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailor_app/provider/login_provider.dart';
-import 'package:tailor_app/view/screens/signup_screen.dart';
+import 'package:tailor_app/provider/auth/login_provider.dart';
+import 'package:tailor_app/view/screens/auth/signup_screen.dart';
 
-import '../widgets/custom_button.dart';
-import '../widgets/custom_field.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

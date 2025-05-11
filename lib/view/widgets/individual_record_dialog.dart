@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailor_app/provider/individual_dialog_provider.dart';
+import 'package:tailor_app/provider/individual/individual_dialog_provider.dart';
 import 'package:tailor_app/view/widgets/custom_button.dart';
 import 'package:tailor_app/view/widgets/custom_field.dart';
 
@@ -150,7 +150,7 @@ class _IndividualRecordDialogState extends State<IndividualRecordDialog> {
                         fontWeight: FontWeight.w400,
                         onTap: () {
                           if(provider.formKey.currentState!.validate()){
-                            provider.individualData(context);
+                            provider.saveData(context);
                           }
                         },
                         title: 'Save',

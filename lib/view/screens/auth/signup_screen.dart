@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailor_app/provider/signin_provider.dart';
-import 'package:tailor_app/view/screens/login_screen.dart';
+import 'package:tailor_app/provider/auth/signin_provider.dart';
+import 'package:tailor_app/view/screens/auth/login_screen.dart';
 import 'package:tailor_app/view/widgets/custom_button.dart';
 import 'package:tailor_app/view/widgets/custom_field.dart';
 

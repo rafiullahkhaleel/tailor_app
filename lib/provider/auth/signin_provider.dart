@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../view/screens/home_screen.dart';
+import '../../view/screens/home_screen.dart';
 
 class SignInProvider with ChangeNotifier {
   TextEditingController emailController = TextEditingController();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailor_app/provider/family_member_dialog_provider.dart';
+import 'package:tailor_app/provider/family/family_member_dialog_provider.dart';
 
 import 'custom_button.dart';
 import 'custom_field.dart';

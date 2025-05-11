@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailor_app/view/screens/family_members_detail_screen.dart';
-import 'package:tailor_app/view/screens/individual_record_screen.dart';
+import 'package:tailor_app/view/screens/family/family_members_detail_screen.dart';
+import 'package:tailor_app/view/screens/individual/individual_record_screen.dart';
 import 'package:tailor_app/view/widgets/custom_field.dart';
 import 'package:tailor_app/view/widgets/family_member_dialog.dart';
 
-import '../../provider/family_member_provider.dart';
+import '../../../provider/family/family_member_provider.dart';
 
 class FamilyMembersScreen extends StatefulWidget {
   final String title;

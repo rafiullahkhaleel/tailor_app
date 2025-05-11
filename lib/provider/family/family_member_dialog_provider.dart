@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tailor_app/view/screens/family/family_members_screen.dart';
 
-import '../view/screens/home_screen.dart';
-
-class IndividualDialogProvider extends ChangeNotifier {
+class FamilyMemberDialogProvider extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
+  TextEditingController relationController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController widthController = TextEditingController();
   TextEditingController sleeveController = TextEditingController();
@@ -17,6 +17,7 @@ class IndividualDialogProvider extends ChangeNotifier {
   bool isLoading = false;
 
   clear() {
+    relationController.clear();
     nameController.clear();
     heightController.clear();
     widthController.clear();
@@ -31,15 +32,23 @@ class IndividualDialogProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> individualData(BuildContext context) async {
+  Future<void> familyMemberData(
+    BuildContext context,
+    String id,
+    String title,
+  ) async {
     try {
       isLoading = true;
       notifyListeners();
-      await FirebaseFirestore.instance
-          .collection('individual')
-          .doc(DateTime.now().microsecondsSinceEpoch.toString())
-          .set({
+      DocumentReference reference =
+          FirebaseFirestore.instance
+              .collection('families')
+              .doc(id)
+              .collection('familyMembers')
+              .doc();
+      await reference.set({
             'name': nameController.text,
+            'relation': relationController.text,
             'height': heightController.text,
             'width': widthController.text,
             'sleeve': sleeveController.text,
@@ -48,9 +57,11 @@ class IndividualDialogProvider extends ChangeNotifier {
             'pantsHeight': pantsHeightController.text,
             'paina': painaController.text,
             'uid': FirebaseAuth.instance.currentUser!.uid,
+            'id': reference.id,
           })
           .then((val) {
             isLoading = false;
+            clear();
             notifyListeners();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -58,10 +69,11 @@ class IndividualDialogProvider extends ChangeNotifier {
                 content: Text('SUCCESSFULLY SAVED'),
               ),
             );
-            clear();
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen(tabIndex: 0)),
+              MaterialPageRoute(
+                builder: (context) => FamilyMembersScreen(title: title, id: id),
+              ),
             );
           });
     } catch (e) {
@@ -73,7 +85,6 @@ class IndividualDialogProvider extends ChangeNotifier {
           content: Text('ERROR OCCURRED $e'),
         ),
       );
-      Navigator.of(context).pop();
     }
   }
 }
