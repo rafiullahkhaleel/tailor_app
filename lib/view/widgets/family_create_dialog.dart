@@ -33,11 +33,22 @@ class _FamilyCreateDialogState extends State<FamilyCreateDialog> {
               ),
               Form(
                 key: provider.formKey,
-                child: CustomField(
-                  hint: 'Family Head',
-                  controller: provider.controller,
-                  emptyFieldError: 'Please enter Name',
+                child: Column(
+                  spacing: 20,
+                  children: [
+                    CustomField(
+                      hint: 'Family Head',
+                      controller: provider.nameController,
+                      emptyFieldError: 'Please enter Name',
+                    ),
+                    CustomField(
+                      hint: 'Phone No',
+                      controller: provider.phoneController,
+                      emptyFieldError: 'Please enter PhoneNo',
+                    ),
+                  ],
                 ),
+
               ),
               CustomButton(
                 isLoading: provider.isLoading,

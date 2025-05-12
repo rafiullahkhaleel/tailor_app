@@ -81,8 +81,8 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                                             builder:
                                                 (context) =>
                                                     FamilyMembersScreen(
-                                                      title: data['headName'],
-                                                      id: data['id'],
+                                                      title: data.headName,
+                                                      id: data.id,
                                                     ),
                                           ),
                                         );
@@ -91,8 +91,8 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                                         radius: 30,
                                         backgroundColor: Colors.blueGrey,
                                         child: Text(
-                                          data['headName'].isNotEmpty
-                                              ? data['headName'][0]
+                                          data.headName.isNotEmpty
+                                              ? data.headName[0]
                                               : '',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
@@ -102,11 +102,19 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                                         ),
                                       ),
                                       title: Text(
-                                        data['headName'],
+                                        data.headName,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      subtitle:  Text(
+                                        data.phoneNo,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                       ),
                                     ),
