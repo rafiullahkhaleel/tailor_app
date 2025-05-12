@@ -15,6 +15,8 @@ class IndividualDialogProvider extends ChangeNotifier {
   TextEditingController backYokeController = TextEditingController();
   TextEditingController pantsHeightController = TextEditingController();
   TextEditingController painaController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
   bool isLoading = false;
 
   void clear() {
@@ -47,6 +49,8 @@ class IndividualDialogProvider extends ChangeNotifier {
       pantsHeight: pantsHeightController.text,
       paina: painaController.text,
       uid: FirebaseAuth.instance.currentUser!.uid,
+      address : addressController.text,
+      phoneNo : phoneController.text,
     );
 
     try {

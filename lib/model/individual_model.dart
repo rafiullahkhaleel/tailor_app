@@ -9,6 +9,8 @@ class IndividualModel {
   final String pantsHeight;
   final String paina;
   final String uid;
+  final String address;
+  final String phoneNo;
 
   IndividualModel({
     required this.id,
@@ -21,6 +23,8 @@ class IndividualModel {
     required this.pantsHeight,
     required this.paina,
     required this.uid,
+    required this.address,
+    required this.phoneNo
   });
 
   factory IndividualModel.fromMap(Map<String, dynamic> map, String id) {
@@ -35,6 +39,9 @@ class IndividualModel {
       pantsHeight: map['pantsHeight'] ?? '',
       paina: map['paina'] ?? '',
       uid: map['uid'] ?? '',
+        address : map['address'] ?? '',
+        phoneNo : map['phoneNo'] ?? '',
+
     );
   }
 
@@ -49,6 +56,8 @@ class IndividualModel {
       'pantsHeight': pantsHeight,
       'paina': paina,
       'uid': uid,
+      'address' : address,
+      'phoneNo' : phoneNo,
     };
   }
 }

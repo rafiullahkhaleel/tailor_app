@@ -43,10 +43,12 @@ class FamilyMemberProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> delete(String id) async {
+  Future<void> delete(String firstId, String id) async {
     await FirebaseFirestore.instance
         .collection('families')
-        .doc(id).collection('familyMembers').doc(id)
+        .doc(firstId)
+        .collection('familyMembers')
+        .doc(id)
         .delete();
     _snapshot.removeWhere((doc) => doc.id == id);
     _filteredSnapshot.removeWhere((doc) => doc.id == id);

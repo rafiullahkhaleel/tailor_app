@@ -91,8 +91,8 @@ class _FamilyMembersScreenState extends State<FamilyMembersScreen> {
                                 key: Key(id),
                                 direction: DismissDirection.horizontal,
                                 background: MyContainer(),
-                                onDismissed: (value) {
-                                  provider.delete(id);
+                                onDismissed: (value) async{
+                                  await provider.delete(widget.id,data.id);
                                 },
                                 child: ListTile(
                                   onTap: () {

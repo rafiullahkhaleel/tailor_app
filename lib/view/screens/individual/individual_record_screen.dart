@@ -80,6 +80,8 @@ class _IndividualRecordScreenState extends State<IndividualRecordScreen> {
                                           item.pantsHeight,
                                           paina: item.paina,
                                           id: item.id,
+                                          address: item.address,
+                                          phoneNo: item.phoneNo,
                                         ),
                                   ),
                                 );

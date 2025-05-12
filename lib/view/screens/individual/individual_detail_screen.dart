@@ -11,6 +11,8 @@ class IndividualDetailScreen extends StatefulWidget {
   final String pantLength;
   final String paina;
   final String id;
+  final String address;
+  final String phoneNo;
   const IndividualDetailScreen({
     super.key,
     required this.name,
@@ -21,7 +23,7 @@ class IndividualDetailScreen extends StatefulWidget {
     required this.backYoke,
     required this.pantLength,
     required this.paina,
-    required this.id,
+    required this.id, required this.address, required this.phoneNo,
   });
 
   @override
@@ -134,6 +136,42 @@ class _IndividualDetailScreenState extends State<IndividualDetailScreen> {
                 ),
               ),
             ),
+            Text(
+              'Phone No',
+              style: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  children: [
+                    MyText(title: widget.phoneNo,),
+                  ],
+                ),
+              ),
+            ),
+            Text(
+              'Address',
+              style: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  children: [
+                    MyText(title: widget.address,),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
