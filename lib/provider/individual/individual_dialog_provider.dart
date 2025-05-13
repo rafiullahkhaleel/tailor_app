@@ -28,6 +28,8 @@ class IndividualDialogProvider extends ChangeNotifier {
     backYokeController.clear();
     pantsHeightController.clear();
     painaController.clear();
+    addressController.clear();
+    phoneController.clear();
   }
 
   notify() {

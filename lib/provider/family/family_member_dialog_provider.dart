@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tailor_app/model/family_members_model.dart';
 import 'package:tailor_app/view/screens/family/family_members_screen.dart';
 
 class FamilyMemberDialogProvider extends ChangeNotifier {
@@ -46,19 +47,21 @@ class FamilyMemberDialogProvider extends ChangeNotifier {
               .doc(id)
               .collection('familyMembers')
               .doc();
-      await reference.set({
-            'name': nameController.text,
-            'relation': relationController.text,
-            'height': heightController.text,
-            'width': widthController.text,
-            'sleeve': sleeveController.text,
-            'neckband': neckbandController.text,
-            'backYoke': backYokeController.text,
-            'pantsHeight': pantsHeightController.text,
-            'paina': painaController.text,
-            'uid': FirebaseAuth.instance.currentUser!.uid,
-            'id': reference.id,
-          })
+
+      final newData = FamilyMembersModel(
+          name: nameController.text,
+          relation: relationController.text,
+          height: heightController.text,
+          width: widthController.text,
+          sleeve: sleeveController.text,
+          neckband: neckbandController.text,
+          backYoke: backYokeController.text,
+          pantsHeight: pantsHeightController.text,
+          paina: painaController.text,
+          uid: FirebaseAuth.instance.currentUser!.uid,
+          id: reference.id);
+
+      await reference.set(newData.toMap())
           .then((val) {
             isLoading = false;
             clear();

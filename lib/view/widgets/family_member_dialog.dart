@@ -22,6 +22,7 @@ class _FamilyMemberDialogState extends State<FamilyMemberDialog> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
           child: Form(
+            key: provider.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -85,9 +86,9 @@ class _FamilyMemberDialogState extends State<FamilyMemberDialog> {
                   children: [
                     Expanded(
                       child: CustomField(
-                        emptyFieldError: 'Please enter sleeve measure',
                         hint: 'Sleeve',
                         controller: provider.sleeveController,
+                        emptyFieldError: 'Please enter sleeve measure',
                       ),
                     ),
 
@@ -156,7 +157,9 @@ class _FamilyMemberDialogState extends State<FamilyMemberDialog> {
                         fontSize: 19,
                         fontWeight: FontWeight.w400,
                         onTap: () {
-                          provider.familyMemberData(context, widget.id,widget.title);
+                          if(provider.formKey.currentState!.validate()){
+                            provider.familyMemberData(context, widget.id,widget.title);
+                          }
                         },
                         title: 'Save',
                       ),

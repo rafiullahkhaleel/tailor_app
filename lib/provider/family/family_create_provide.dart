@@ -37,6 +37,7 @@ class FamilyCreateProvider extends ChangeNotifier {
           MaterialPageRoute(builder: (context) => HomeScreen(tabIndex: 1)),
         );
         _nameController.clear();
+        _phoneController.clear();
       });
     } catch (e) {
       _isLoading = false;

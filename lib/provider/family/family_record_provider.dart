@@ -38,7 +38,7 @@ class FamilyRecordProvider extends ChangeNotifier {
     }
   }
 
-  /// ✅ This method now deletes familyMembers before deleting family
+  // This method now deletes familyMembers before deleting family
   Future<void> delete(String id) async {
     try {
       // Step 1: Get all familyMembers under this family

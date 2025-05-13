@@ -74,6 +74,7 @@ class _FamilyRecordScreenState extends State<FamilyRecordScreen> {
                                       provider.delete(id);
                                     },
                                     child: ListTile(
+                                      contentPadding: EdgeInsets.symmetric(horizontal: 0),
                                       onTap: () {
                                         Navigator.push(
                                           context,

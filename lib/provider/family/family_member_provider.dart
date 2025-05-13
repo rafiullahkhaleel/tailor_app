@@ -1,16 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tailor_app/model/family_members_model.dart';
 
 class FamilyMemberProvider extends ChangeNotifier {
   TextEditingController filteredController = TextEditingController();
-  List<DocumentSnapshot> _snapshot = [];
-  List<DocumentSnapshot> _filteredSnapshot = [];
+  List<FamilyMembersModel> _snapshot = [];
+  List<FamilyMembersModel> _filteredSnapshot = [];
   String? _error;
   bool _isLoading = false;
 
-  List<DocumentSnapshot> get snapshot => _snapshot;
-  List<DocumentSnapshot> get filteredSnapshot => _filteredSnapshot;
+  List<FamilyMembersModel> get snapshot => _snapshot;
+  List<FamilyMembersModel> get filteredSnapshot => _filteredSnapshot;
   String? get error => _error;
   bool get isLoading => _isLoading;
 
@@ -31,9 +32,11 @@ class FamilyMemberProvider extends ChangeNotifier {
             _isLoading = false;
             _error = null;
             notifyListeners();
-            final allDocs = data.docs;
 
-            _snapshot = allDocs;
+
+            _snapshot = data.docs.map((docs){
+              return FamilyMembersModel.fromMap(docs.data());
+            }).toList();
           });
     } catch (e) {
       _error = e.toString();
@@ -58,7 +61,7 @@ class FamilyMemberProvider extends ChangeNotifier {
   void filter(String search) {
     _filteredSnapshot =
         snapshot.where((docs) {
-          return docs['name'].toString().toLowerCase().contains(
+          return docs.name.toString().toLowerCase().contains(
             search.toLowerCase(),
           );
         }).toList();
